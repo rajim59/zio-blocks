@@ -48,8 +48,8 @@ abstract class JsonBinaryCodec[A](val valueType: Int = JsonBinaryCodec.objectTyp
 
   /**
    * Attempts to decode a value of type `A` from the specified `JsonReader`, but
-   * may fail with `JsonBinaryCodecError` error if the JSON input does not
-   * encode a value of this type.
+   * may fail with `JsonError` error if the JSON input does not encode a value
+   * of this type.
    *
    * @param in
    *   an instance of `JsonReader` which provides access to the JSON input to
@@ -62,8 +62,8 @@ abstract class JsonBinaryCodec[A](val valueType: Int = JsonBinaryCodec.objectTyp
 
   /**
    * Encodes the specified value using provided `JsonWriter`, but may fail with
-   * `JsonBinaryCodecError` if it cannot be encoded properly according to
-   * RFC-8259 requirements.
+   * `JsonError` if it cannot be encoded properly according to RFC-8259
+   * requirements.
    *
    * @param x
    *   the value provided for serialization
@@ -81,8 +81,8 @@ abstract class JsonBinaryCodec[A](val valueType: Int = JsonBinaryCodec.objectTyp
 
   /**
    * Attempts to decode a value of type `A` from the specified `JsonReader`, but
-   * may fail with `JsonBinaryCodecError` error if the JSON input is not a key
-   * or does not encode a value of this type.
+   * may fail with `JsonError` error if the JSON input is not a key or does not
+   * encode a value of this type.
    *
    * @param in
    *   an instance of `JsonReader` which provides access to the JSON input to
@@ -92,8 +92,8 @@ abstract class JsonBinaryCodec[A](val valueType: Int = JsonBinaryCodec.objectTyp
 
   /**
    * Encodes the specified value using provided `JsonWriter` as a JSON key, but
-   * may fail with `JsonBinaryCodecError` if it cannot be encoded properly,
-   * according to RFC-8259 requirements.
+   * may fail with `JsonError` if it cannot be encoded properly, according to
+   * RFC-8259 requirements.
    *
    * @param x
    *   the value provided for serialization
@@ -370,8 +370,8 @@ abstract class JsonBinaryCodec[A](val valueType: Int = JsonBinaryCodec.objectTyp
     new ::(
       new ExpectationMismatch(
         error match {
-          case e: JsonBinaryCodecError =>
-            var list  = e.spans
+          case e: JsonError =>
+            var list  = e.path.nodes
             val array = new Array[DynamicOptic.Node](list.size)
             var idx   = 0
             while (list ne Nil) {
