@@ -231,7 +231,7 @@ private class SchemaCompanionVersionSpecificImpl(using Quotes) {
         modifiers = annotation.asExpr.asInstanceOf[Expr[Modifier.Reflect]] :: modifiers
       }
     }
-    if (modifiers eq Nil) '{ Nil } else Varargs(modifiers)
+    if (modifiers eq Nil) 'Nil else Varargs(modifiers)
   }
 
   private def summonClassTag[T: Type](using Quotes): Expr[ClassTag[T]] =
