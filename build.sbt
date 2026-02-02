@@ -174,26 +174,6 @@ lazy val `schema-avro` = project
     })
   )
 
-lazy val `schema-thrift` = project
-  .in(file("schema-thrift"))
-  .settings(stdSettings("zio-blocks-schema-thrift"))
-  .dependsOn(schema.jvm, chunk.jvm)
-  .settings(buildInfoSettings("zio.blocks.schema.thrift"))
-  .enablePlugins(BuildInfoPlugin)
-  .settings(
-    name := "zio-schema-thrift-v2",
-    libraryDependencies ++= Seq(
-      "dev.zio"           %% "zio"                    % "2.0.21",
-      "dev.zio"           %% "zio-streams"            % "2.0.21",
-      "dev.zio"           %% "zio-schema"             % "1.6.1",
-      "dev.zio"           %% "zio-schema-derivation"  % "1.6.1",
-      "org.apache.thrift"  % "libthrift"              % "0.19.0",
-      "jakarta.annotation" % "jakarta.annotation-api" % "1.3.5",
-      "dev.zio"           %% "zio-schema-zio-test"    % "1.6.1"  % Test,
-      "dev.zio"           %% "zio-test"               % "2.1.24" % Test,
-      "dev.zio"           %% "zio-test-sbt"           % "2.1.24" % Test
-    )
-  )
 
 lazy val `schema-toon` = crossProject(JSPlatform, JVMPlatform, NativePlatform)
   .crossType(CrossType.Pure)
