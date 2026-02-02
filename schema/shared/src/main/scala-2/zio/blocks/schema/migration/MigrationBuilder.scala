@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package zio.blocks.schema.migration
 
 import zio.blocks.schema.{Schema, DynamicOptic}
@@ -184,4 +185,62 @@ class MigrationBuilder[A, B, Steps <: MList](
 object MigrationBuilder {
   def make[A, B](implicit source: Schema[A], target: Schema[B]): MigrationBuilder[A, B, MNil] =
     new MigrationBuilder(source, target, List.empty)
+=======
+package zio.blocks.schema.migration
+
+import zio.blocks.schema.{Schema, SchemaExpr}
+import zio.blocks.schema.migration.macros.MigrationMacros
+import scala.language.experimental.macros
+
+/**
+ * Type-Safe Migration Builder.
+ * Now supports Phantom Types for Compile-Time Validation.
+ */
+class MigrationBuilder[A, B, Ops <: MigrationOp](
+  val sourceSchema: Schema[A],
+  val targetSchema: Schema[B]
+) {
+
+  // 1. Rename
+  def renameField[T1, T2](from: A => T1, to: B => T2): Any = 
+    macro MigrationMacros.renameFieldImpl[A, B, Ops, T1, T2]
+
+  // 2. Add (Macro version only - Clean and Safe)
+  def addField[T](target: B => T, default: SchemaExpr[_, _]): Any = 
+    macro MigrationMacros.addFieldImpl[A, B, Ops, T]
+
+  // 3. Drop
+  def dropField[T](source: A => T, defaultExpr: Option[SchemaExpr[_, _]] = None)(implicit schema: Schema[T]): Any = 
+    macro MigrationMacros.dropFieldImpl[A, B, Ops, T]
+
+  // 4. Change Type
+  def changeFieldType[T1, T2](from: A => T1, to: B => T2, converter: SchemaExpr[_, _]): Any =
+    macro MigrationMacros.changeTypeImpl[A, B, Ops, T1, T2]
+
+  // 5. Transform Field
+  def transformField[T1, T2](from: A => T1, to: B => T2, transform: SchemaExpr[_, _]): Any =
+    macro MigrationMacros.transformFieldImpl[A, B, Ops, T1, T2]
+
+  // 6. Mandate
+  def mandateField[T](from: A => Option[T], target: B => T, default: SchemaExpr[_, _]): Any =
+    macro MigrationMacros.mandateFieldImpl[A, B, Ops, T]
+
+  // 7. Optionalize
+  def optionalizeField[T](source: A => T, target: B => Option[T]): Any =
+    macro MigrationMacros.optionalizeFieldImpl[A, B, Ops, T]
+
+  /**
+   * The Build Method.
+   * Verifies the migration logic at compile-time.
+   */
+  def build(implicit verifier: MigrationVerifier[A, B, Ops]): Migration[A, B] = {
+    verifier.verify(sourceSchema, targetSchema)
+  }
+}
+
+object MigrationBuilder {
+  // Initial Builder State: Ops is Empty (MNil)
+  def make[A, B](implicit source: Schema[A], target: Schema[B]): MigrationBuilder[A, B, MNil] =
+    new MigrationBuilder[A, B, MNil](source, target)
+>>>>>>> 81fc9d21 (fix: resolve schema migration engine compilation errors)
 }

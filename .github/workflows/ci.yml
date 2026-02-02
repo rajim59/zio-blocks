@@ -163,4 +163,7 @@ jobs:
           PGP_SECRET: ${{ secrets.PGP_SECRET }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 81fc9d21 (fix: resolve schema migration engine compilation errors)

@@ -1,4 +1,4 @@
-import BuildHelper.*
+import BuildHelper._
 import MimaSettings.mimaSettings
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
@@ -83,6 +83,7 @@ lazy val schema = crossProject(JSPlatform, JVMPlatform, NativePlatform)
   .dependsOn(chunk)
   .settings(
     compileOrder := CompileOrder.JavaThenScala,
+    scalacOptions ++= Seq("-language:experimental.macros"), 
     libraryDependencies ++= Seq(
       "dev.zio" %%% "zio-prelude"  % "1.0.0-RC41" % Test,
       "dev.zio" %%% "zio-test"     % "2.1.24"     % Test,
@@ -90,7 +91,7 @@ lazy val schema = crossProject(JSPlatform, JVMPlatform, NativePlatform)
     ) ++ (CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((2, _)) =>
         Seq(
-          "org.scala-lang" % "scala-reflect" % scalaVersion.value
+          "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided"
         )
       case _ =>
         Seq()
@@ -360,11 +361,12 @@ lazy val docs = project
     moduleName := "zio-blocks-docs",
     scalacOptions -= "-Yno-imports",
     scalacOptions -= "-Xfatal-warnings",
-    projectName                                := (ThisBuild / name).value,
-    mainModuleName                             := (schema.jvm / moduleName).value,
-    projectStage                               := ProjectStage.Development,
+    projectName                                    := (ThisBuild / name).value,
+    mainModuleName                                 := (schema.jvm / moduleName).value,
+    projectStage                                   := ProjectStage.Development,
     ScalaUnidoc / unidoc / unidocProjectFilter := inProjects(schema.jvm),
-    publish / skip                             := true
+    publish / skip                                 := true
   )
   .dependsOn(schema.jvm)
   .enablePlugins(WebsitePlugin)
+  
