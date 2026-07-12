@@ -262,7 +262,7 @@ lazy val `schema-thrift` = project
   .enablePlugins(BuildInfoPlugin)
   .settings(
     libraryDependencies ++= Seq(
-      "org.apache.thrift"  % "libthrift"              % "0.22.0",
+      "org.apache.thrift"  % "libthrift"              % "0.24.0",
       "jakarta.annotation" % "jakarta.annotation-api" % "3.0.0",
       "dev.zio"           %% "zio-test"               % "2.1.24" % Test,
       "dev.zio"           %% "zio-test-sbt"           % "2.1.24" % Test
