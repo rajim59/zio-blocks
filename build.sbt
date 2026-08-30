@@ -159,7 +159,7 @@ lazy val schema = crossProject(JSPlatform, JVMPlatform)
         Seq()
       case _ =>
         Seq(
-          "io.github.kitlangton" %%% "neotype" % "0.4.10" % Test
+          "io.github.kitlangton" %%% "neotype" % "0.7.1" % Test
         )
     })
   )
@@ -172,7 +172,7 @@ lazy val schema = crossProject(JSPlatform, JVMPlatform)
         Seq()
       case _ =>
         Seq(
-          "io.github.kitlangton" %%% "neotype" % "0.4.10" % Test
+          "io.github.kitlangton" %%% "neotype" % "0.7.1" % Test
         )
     })
   )
@@ -248,7 +248,7 @@ lazy val `schema-avro` = project
         Seq()
       case _ =>
         Seq(
-          "io.github.kitlangton" %% "neotype" % "0.4.10" % Test
+          "io.github.kitlangton" %% "neotype" % "0.7.1" % Test
         )
     }),
     coverageMinimumStmtTotal   := 94,
@@ -286,7 +286,7 @@ lazy val `schema-bson` = project
         Seq()
       case _ =>
         Seq(
-          "io.github.kitlangton" %% "neotype" % "0.4.10" % Test
+          "io.github.kitlangton" %% "neotype" % "0.7.1" % Test
         )
     }),
     coverageMinimumStmtTotal   := 63, // Lowered from 67 for Scala 3.5 compatibility
