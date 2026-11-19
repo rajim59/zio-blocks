@@ -2,7 +2,7 @@ lazy val zioSbtVersion = "0.4.10"
 addSbtPlugin("dev.zio" % "zio-sbt-website" % zioSbtVersion)
 
 addSbtPlugin("com.timushev.sbt"   % "sbt-updates"              % "0.6.4")
-addSbtPlugin("pl.project13.scala" % "sbt-jmh"                  % "0.4.8")
+addSbtPlugin("com.github.sbt"     % "sbt-jmh"                  % "0.4.9")
 addSbtPlugin("com.eed3si9n"       % "sbt-assembly"             % "2.3.1")
 addSbtPlugin("com.eed3si9n"       % "sbt-buildinfo"            % "0.13.1")
 addSbtPlugin("com.github.sbt"     % "sbt-ci-release"           % "1.11.2")
